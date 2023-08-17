@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>product page</title>
+  <link rel="stylesheet" href="/dist/output.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></script>
+</head>
+
+<body x-data="setup()" :class="{ 'dark': isDark }" class="bg-gray-200 dark:bg-black">
+  <style>
+    .dark .dark\:divide-gray-700> :not([hidden])~ :not([hidden]) {
+      border-color: rgba(55, 65, 81);
+    }
+
+    .dark .dark\:bg-gray-50 {
+      background-color: rgba(249, 250, 251);
+    }
+
+    .dark .dark\:bg-gray-100 {
+      background-color: rgba(243, 244, 246);
+    }
+
+    .dark .dark\:bg-gray-600 {
+      background-color: rgba(75, 85, 99);
+    }
+
+    .dark .dark\:bg-gray-700 {
+      background-color: rgba(55, 65, 81);
+    }
+
+    .dark .dark\:bg-gray-900 {
+      background-color: rgba(17, 24, 39);
+    }
+
+    .dark .dark\:bg-black {
+      background-color: rgb(0, 0, 0);
+    }
+
+    .dark .dark\:bg-red-700 {
+      background-color: rgba(185, 28, 28);
+    }
+
+    .dark .dark\:bg-green-700 {
+      background-color: rgba(4, 120, 87);
+    }
+
+    .dark .dark\:bg-indigo-800 {
+      background-color: rgb(55, 48, 163);
+    }
+
+    .dark .dark\:hover\:bg-gray-200:hover {
+      background-color: rgba(229, 231, 235);
+    }
+
+    .dark .dark\:hover\:bg-gray-600:hover {
+      background-color: rgba(75, 85, 99);
+    }
+
+    .dark .dark\:hover\:bg-gray-700:hover {
+      background-color: rgba(55, 65, 81);
+    }
+
+    .dark .dark\:hover\:bg-gray-900:hover {
+      background-color: rgba(17, 24, 39);
+    }
+
+    .dark .dark\:border-gray-100 {
+      border-color: rgba(243, 244, 246);
+    }
+
+    .dark .dark\:border-gray-400 {
+      border-color: rgba(156, 163, 175);
+    }
+
+    .dark .dark\:border-gray-500 {
+      border-color: rgba(107, 114, 128);
+    }
+
+    .dark .dark\:border-gray-600 {
+      border-color: rgba(75, 85, 99);
+    }
+
+    .dark .dark\:border-gray-700 {
+      border-color: rgba(55, 65, 81);
+    }
+
+    .dark .dark\:border-gray-900 {
+      border-color: rgb(0, 0, 0);
+    }
+
+    .dark .dark\:border-black {
+      border-color: rgb(0, 0, 0);
+    }
+
+    .dark .dark\:hover\:border-gray-800:hover {
+      border-color: rgba(31, 41, 55);
+    }
+
+    .dark .dark\:text-white {
+      color: rgba(255, 255, 255);
+    }
+
+    .dark .dark\:text-gray-50 {
+      color: rgba(249, 250, 251);
+    }
+
+    .dark .dark\:text-gray-100 {
+      color: rgba(243, 244, 246);
+    }
+
+    .dark .dark\:text-gray-200 {
+      color: rgba(229, 231, 235);
+    }
+
+    .dark .dark\:text-gray-400 {
+      color: rgba(156, 163, 175);
+    }
+
+    .dark .dark\:text-blue-700 {
+      color: rgb(25, 118, 210);
+    }
+
+    .dark .dark\:text-red-500 {
+      color: rgb(211, 47, 47);
+    }
+
+    .dark .dark\:text-green-700 {
+      color: rgb(56, 142, 60);
+    }
+
+    .dark .dark\:text-blue-900 {
+      color: rgb(13, 71, 161);
+    }
+
+    .dark .dark\:text-gray-500 {
+      color: rgba(107, 114, 128);
+    }
+
+    .dark .dark\:text-gray-700 {
+      color: rgba(55, 65, 81);
+    }
+
+    .dark .dark\:text-gray-800 {
+      color: rgba(31, 41, 55);
+    }
+
+    .dark .dark\:text-black {
+      color: rgb(0, 0, 0);
+    }
+
+    .dark .dark\:text-red-100 {
+      color: rgba(254, 226, 226);
+    }
+
+    .dark .dark\:text-green-100 {
+      color: rgba(209, 250, 229);
+    }
+
+    .dark .dark\:text-blue-400 {
+      color: rgba(96, 165, 250);
+    }
+
+    .dark .group:hover .dark\:group-hover\:text-gray-500 {
+      color: rgba(107, 114, 128);
+    }
+
+    .dark .group:focus .dark\:group-focus\:text-gray-700 {
+      color: rgba(55, 65, 81);
+    }
+
+    .dark .dark\:hover\:text-gray-100:hover {
+      color: rgba(243, 244, 246);
+    }
+
+    .dark .dark\:hover\:text-blue-500:hover {
+      color: rgba(59, 130, 246);
+    }
+  </style>
+  <div
+    class="flex flex-col flex-auto flex-shrink-0 min-h-screen antialiased text-black bg-white dark:bg-black dark:text-white">
+    <div class="flex justify-between items-center h-14 bg-[#002444] dark:bg-black">
+      <div class="flex pl-4 dark:rounded-t-md">
+        <img src="/2.jpg" alt="" class="hidden w-12 h-12 rounded-full md:block" />
+        <p class="hidden mt-3 ml-3 text-white md:block">Fazil</p>
+      </div>
+      <div class="flex items-center w-full max-w-xl p-2 mr-4 bg-white border border-gray-200 rounded shadow-sm">
+        <button class="outline-none focus:outline-none">
+          <svg class="w-5 h-5 text-gray-600 cursor-pointer" fill="none" stroke-linecap="round" stroke-linejoin="round"
+            stroke-width="2" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </button>
+        <input type="search" name="" id="" placeholder="Search"
+          class="w-full text-sm text-black bg-transparent outline-none focus:outline-none" />
+      </div>
+      <ul class="flex items-center">
+        <li>
+          <button aria-hidden="true" @click="toggleTheme"
+            class="p-2 text-gray-900 transition-colors duration-200 bg-blue-200 rounded-full shadow-md group hover:bg-blue-200 dark:bg-gray-50 dark:hover:bg-gray-200 focus:outline-none">
+            <svg x-show="isDark" width="24" height="24"
+              class="text-gray-700 fill-current group-hover:text-gray-500 group-focus:text-gray-700 dark:text-gray-700 dark:group-hover:text-gray-500 dark:group-focus:text-gray-700"
+              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+            </svg>
+            <svg x-show="!isDark" width="24" height="24"
+              class="text-gray-700 fill-current group-hover:text-gray-500 group-focus:text-gray-700 dark:text-gray-700 dark:group-hover:text-gray-500 dark:group-focus:text-gray-700"
+              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+          </button>
+        </li>
+        <li>
+          <div class="block w-px h-6 mx-3 bg-gray-400 dark:bg-gray-700"></div>
+        </li>
+        <li>
+          <a href="#" class="flex items-center mr-8 hover:text-blue-100">
+            <span class="inline-flex mr-1">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+              </svg>
+            </span>
+            <span class="text-white">Logout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+
+
+    <main class="md:mx-8">
+      <div class="flex flex-wrap items-center gap-2 px-2 mt-6 mb-3 text-xs text-gray-600 lg:px-8 dark:text-gray-300">
+        <nav class="flex overflow-hidden hover:overflow-x-auto" aria-label="Breadcrumb">
+          <ol role="list" class="flex items-center space-x-1">
+            <li>
+              <div><a href="#" class="text-gray-400 hover:text-gray-500"><svg xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" class="flex-shrink-0 w-4 h-4">
+                    <path fill-rule="evenodd"
+                      d="M9.293 2.293a1 1 0 011.414 0l7 7A1 1 0 0117 11h-1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-3a1 1 0 00-1-1H9a1 1 0 00-1 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-6H3a1 1 0 01-.707-1.707l7-7z"
+                      clip-rule="evenodd"></path>
+                  </svg><span class="sr-only">Home</span></a></div>
+            </li>
+            <li>
+              <div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                  fill="currentColor" aria-hidden="true" class="flex-shrink-0 w-4 h-4 text-gray-400">
+                  <path fill-rule="evenodd"
+                    d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                    clip-rule="evenodd"></path>
+                </svg><a class="text-xs text-gray-500 hover:text-gray-700 whitespace-nowrap"
+                  href="/product/microsoft-135-multi-touch-surface-laptop-5-for-business-matte-black-metal-2#">Product</a>
+              </div>
+            </li>
+            <li>
+              <div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                  fill="currentColor" aria-hidden="true" class="flex-shrink-0 w-4 h-4 text-gray-400">
+                  <path fill-rule="evenodd"
+                    d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                    clip-rule="evenodd"></path>
+                </svg><a class="text-xs text-gray-500 hover:text-gray-700 whitespace-nowrap" aria-current="page"
+                  href="/microsoft-135-multi-touch-surface-laptop-5-for-business-matte-black-metal-2">microsoft-135-multi-touch-surface-laptop-5-for-business-matte-black-metal-2</a>
+              </div>
+            </li>
+          </ol>
+        </nav>
+      </div>
+      <div class="grid items-start justify-between grid-cols-12 gap-2 px-2 lg:px-8 gap-x-6">
+        <h1
+          class="col-span-12 md:col-span-10 order-1 text-2xl font-bold leading-7 text-gray-900 dark:text-white sm:text-[28px] line-clamp-2 md:line-clamp-3">
+          Microsoft 13.5" Multi-Touch Surface Laptop 5 for Business (Matte Black, Metal)</h1>
+        <div class="flex flex-col items-end order-last col-span-4 md:col-span-2 md:order-2 pricing-classes">
+          <div class="flex gap-1"><span class="text-2xl font-bold lg:text-3xl">$</span> <span
+              class="text-2xl font-bold md:text-3xl">2,182</span><sup class="text-lg font-light">.23</sup></div><span
+            class="text-xs text-gray-500 line-through">$ NaN</span>
+        </div>
+        <div class="flex flex-col order-3 col-span-8 mt-1 md:col-span-12 sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
+          <div class="flex items-center mt-2 text-xs text-gray-500 md:text-sm"><svg xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"
+              class="mr-1.5 h-3 w-3 md:h-5 md:w-5 flex-shrink-0 text-indigo-400">
+              <path fill-rule="evenodd"
+                d="M3.75 2A1.75 1.75 0 002 3.75v3.5C2 8.216 2.784 9 3.75 9h3.5A1.75 1.75 0 009 7.25v-3.5A1.75 1.75 0 007.25 2h-3.5zM3.5 3.75a.25.25 0 01.25-.25h3.5a.25.25 0 01.25.25v3.5a.25.25 0 01-.25.25h-3.5a.25.25 0 01-.25-.25v-3.5zM3.75 11A1.75 1.75 0 002 12.75v3.5c0 .966.784 1.75 1.75 1.75h3.5A1.75 1.75 0 009 16.25v-3.5A1.75 1.75 0 007.25 11h-3.5zm-.25 1.75a.25.25 0 01.25-.25h3.5a.25.25 0 01.25.25v3.5a.25.25 0 01-.25.25h-3.5a.25.25 0 01-.25-.25v-3.5zm7.5-9c0-.966.784-1.75 1.75-1.75h3.5c.966 0 1.75.784 1.75 1.75v3.5A1.75 1.75 0 0116.25 9h-3.5A1.75 1.75 0 0111 7.25v-3.5zm1.75-.25a.25.25 0 00-.25.25v3.5c0 .138.112.25.25.25h3.5a.25.25 0 00.25-.25v-3.5a.25.25 0 00-.25-.25h-3.5zm-7.26 1a1 1 0 00-1 1v.01a1 1 0 001 1h.01a1 1 0 001-1V5.5a1 1 0 00-1-1h-.01zm9 0a1 1 0 00-1 1v.01a1 1 0 001 1h.01a1 1 0 001-1V5.5a1 1 0 00-1-1h-.01zm-9 9a1 1 0 00-1 1v.01a1 1 0 001 1h.01a1 1 0 001-1v-.01a1 1 0 00-1-1h-.01zm9 0a1 1 0 00-1 1v.01a1 1 0 001 1h.01a1 1 0 001-1v-.01a1 1 0 00-1-1h-.01zm-3.5-1.5a1 1 0 011-1H12a1 1 0 011 1v.01a1 1 0 01-1 1h-.01a1 1 0 01-1-1V12zm6-1a1 1 0 00-1 1v.01a1 1 0 001 1H17a1 1 0 001-1V12a1 1 0 00-1-1h-.01zm-1 6a1 1 0 011-1H17a1 1 0 011 1v.01a1 1 0 01-1 1h-.01a1 1 0 01-1-1V17zm-4-1a1 1 0 00-1 1v.01a1 1 0 001 1H12a1 1 0 001-1V17a1 1 0 00-1-1h-.01z"
+                clip-rule="evenodd"></path>
+            </svg></div>
+          <div class="flex items-center mt-2 text-xs text-gray-500 md:text-sm"><svg xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"
+              class="mr-1.5 h-3 w-3 md:h-5 md:w-5 flex-shrink-0 text-indigo-400">
+              <path fill-rule="evenodd"
+                d="M10.362 1.093a.75.75 0 00-.724 0L2.523 5.018 10 9.143l7.477-4.125-7.115-3.925zM18 6.443l-7.25 4v8.25l6.862-3.786A.75.75 0 0018 14.25V6.443zm-8.75 12.25v-8.25l-7.25-4v7.807a.75.75 0 00.388.657l6.862 3.786z"
+                clip-rule="evenodd"></path>
+            </svg>
+            <h1>MPN #W5S-00001</h1>
+          </div><a href="#tabs" class="flex items-center mt-2 text-xs text-gray-500 md:text-sm hover:underline"><svg
+              xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"
+              class="mr-1.5 h-3 w-3 md:h-5 md:w-5 flex-shrink-0 text-indigo-400">
+              <path fill-rule="evenodd"
+                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM8.94 6.94a.75.75 0 11-1.061-1.061 3 3 0 112.871 5.026v.345a.75.75 0 01-1.5 0v-.5c0-.72.57-1.172 1.081-1.287A1.5 1.5 0 108.94 6.94zM10 15a1 1 0 100-2 1 1 0 000 2z"
+                clip-rule="evenodd"></path>
+            </svg><span>Questions<sup>(2)</sup> Answers<sup>(2)</sup></span></a><a href="#tabs"
+            class="mt-2 md:border-l md:pl-2 hover:underline">
+            <h2 class="sr-only">Reviews</h2>
+            <div class="flex items-center">
+              <div>
+                <div class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                    fill="currentColor" aria-hidden="true"
+                    class="flex-shrink-0 w-3 h-3 text-white bg-gray-300 dark:bg-black md:h-5 md:w-5">
+                    <path fill-rule="evenodd"
+                      d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
+                      clip-rule="evenodd"></path>
+                  </svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                    aria-hidden="true" class="flex-shrink-0 w-3 h-3 text-white bg-gray-300 dark:bg-black md:h-5 md:w-5">
+                    <path fill-rule="evenodd"
+                      d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
+                      clip-rule="evenodd"></path>
+                  </svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                    aria-hidden="true" class="flex-shrink-0 w-3 h-3 text-white bg-gray-300 dark:bg-black md:h-5 md:w-5">
+                    <path fill-rule="evenodd"
+                      d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
+                      clip-rule="evenodd"></path>
+                  </svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                    aria-hidden="true" class="flex-shrink-0 w-3 h-3 text-white bg-gray-300 dark:bg-black md:h-5 md:w-5">
+                    <path fill-rule="evenodd"
+                      d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
+                      clip-rule="evenodd"></path>
+                  </svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                    aria-hidden="true" class="flex-shrink-0 w-3 h-3 text-white bg-gray-300 dark:bg-black md:h-5 md:w-5">
+                    <path fill-rule="evenodd"
+                      d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
+                      clip-rule="evenodd"></path>
+                  </svg></div>
+                <p class="sr-only">0 out of 5 stars</p>
+              </div>
+              <p class="ml-2 text-xs text-gray-500 md:text-sm">0 reviews</p>
+            </div>
+          </a>
+          <div class="mt-2 md:border-l md:pl-2">
+            <ul role="list" class="flex items-center gap-2">
+              <li><a href="#" class="flex items-center justify-center w-6 h-6 text-gray-400 hover:text-gray-500"><span
+                    class="sr-only">Share on Facebook</span><svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
+                    viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M20 10c0-5.523-4.477-10-10-10S0 4.477 0 10c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V10h2.54V7.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V10h2.773l-.443 2.89h-2.33v6.988C16.343 19.128 20 14.991 20 10z"
+                      clip-rule="evenodd"></path>
+                  </svg></a></li>
+              <li><a href="#" class="flex items-center justify-center w-6 h-6 text-gray-400 hover:text-gray-500"><span
+                    class="sr-only">Share on Instagram</span><svg class="w-6 h-6" aria-hidden="true" fill="currentColor"
+                    viewBox="0 0 24 24">
+                    <path fill-rule="evenodd"
+                      d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"
+                      clip-rule="evenodd"></path>
+                  </svg></a></li>
+              <li><a href="#" class="flex items-center justify-center w-6 h-6 text-gray-400 hover:text-gray-500"><span
+                    class="sr-only">Share on Twitter</span><svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
+                    viewBox="0 0 20 20">
+                    <path
+                      d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84">
+                    </path>
+                  </svg></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div
+        class="relative items-start px-2 my-8 bg-white md:z-30 lg:px-8 lg:grid lg:grid-rows-1 lg:grid-cols-7 lg:gap-x-8 lg:gap-y-10 dark:bg-black">
+        <div class="lg:sticky top-20 lg:row-end-1 lg:col-span-4">
+          <div class="grid grid-cols-12 gap-4">
+            <div class="react-multi-carousel-list h-[400px] col-span-12 md:col-span-10" dir="ltr">
+              <ul class="h-full react-multi-carousel-track"
+                style="transition: none 0s ease 0s; overflow: unset; transform: translate3d(0px, 0px, 0px);">
+                <li data-index="0" aria-hidden="false"
+                  class="flex items-center justify-center react-multi-carousel-item react-multi-carousel-item--active"
+                  style="flex: 1 1 auto; position: relative; width: 533px;">
+                  <div class="w-full h-full overflow-hidden rounded-lg">
+                    <div
+                      class="relative hover:cursor-pointer h-[400px] m-auto w-full h-full   flex items-center justify-center">
+                      <img alt="Microsoft 13.5&quot; Multi-Touch Surface Laptop 5 for Business (Matte Black, Metal)"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
+                        src="/2.jpg"
+                        decoding="async" data-nimg="fill" class="object-contain w-full h-auto" loading="lazy"
+                        style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;"></div><a
+                      target="_blank" class="absolute top-0 right-0 transition-all hover:scale-90 active:scale-100"
+                      href="/microsofts"><img alt="Microsoft"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
+                        src="/19.png"
+                        width="120" height="120" decoding="async" data-nimg="1"
+                        class="classes.imageClasses object-contain md:w-16 w-12" loading="lazy"
+                        style="color: transparent;"></a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <ul
+              class="react-multi-carousel-dot-list col-span-12 md:col-span-2 !static !grid grid-flow-col gap-2 md:grid-flow-row max-md:overflow-x-auto md:h-[400px] md:overflow-auto scrollbar-none !py-1">
+              <li><button>
+                  <div
+                    class="relative flex items-center justify-center w-20 h-20 text-sm font-medium text-gray-900 uppercase bg-white rounded-md cursor-pointer md:h-24 md:w-24 dark:bg-zinc-800 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-offset-4 focus:ring-opacity-50">
+                    <span class="sr-only">Microsoft 13.5" Multi-Touch Surface Laptop 5 for Business (Matte Black,
+                      Metal)</span><span class="absolute inset-0 overflow-hidden rounded-md"><img
+                        src="/18.jpg"
+                        alt="Microsoft 13.5&quot; Multi-Touch Surface Laptop 5 for Business (Matte Black, Metal)"
+                        class="object-contain object-center w-full h-full"></span><span
+                      class="absolute inset-0 rounded-md pointer-events-none ring-indigo-500 ring-2 ring-offset-2"
+                      aria-hidden="true"></span></div>
+                </button></li>
+            </ul>
+          </div>
+          <div class="flex flex-wrap gap-2 mt-10 gap-x-4">
+            <div class="relative flex flex-row order-1 gap-1 bg-transparent rounded-lg"><button disabled=""
+                data-action="decrement" title="min 1 item"
+                class="w-12 h-full text-gray-600 border rounded-l outline-none cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-100 dark:disabled:bg-gray-300 hover:text-gray-700 hover:bg-gray-100"><span
+                  class="text-2xl font-thin">−</span></button><label for="custom-input-number" class="hidden">Count Add
+                to Cart</label><input type="number"
+                class="flex items-center w-20 font-semibold text-center text-gray-700 border-gray-200 outline-none cursor-default focus:outline-none text-md hover:text-black focus:text-black md:text-base"
+                name="custom-input-number" value="1"><button data-action="increment"
+                class="w-12 h-full text-gray-600 border rounded-r cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-100 dark:disabled:bg-gray-300 hover:text-gray-700 hover:bg-gray-100"><span
+                  class="text-2xl font-thin">+</span></button></div><button type="button"
+              class="flex items-center justify-center order-2 w-full px-8 py-3 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md grow disabled:cursor-not-allowed hover:bg-indigo-700 disabled:hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"><svg
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"
+                class="mr-1.5 h-3 w-3 md:h-5 md:w-5 flex-shrink-0">
+                <path fill-rule="evenodd"
+                  d="M6 5v1H4.667a1.75 1.75 0 00-1.743 1.598l-.826 9.5A1.75 1.75 0 003.84 19H16.16a1.75 1.75 0 001.743-1.902l-.826-9.5A1.75 1.75 0 0015.333 6H14V5a4 4 0 00-8 0zm4-2.5A2.5 2.5 0 007.5 5v1h5V5A2.5 2.5 0 0010 2.5zM7.5 10a2.5 2.5 0 005 0V8.75a.75.75 0 011.5 0V10a4 4 0 01-8 0V8.75a.75.75 0 011.5 0V10z"
+                  clip-rule="evenodd"></path>
+              </svg><span class="capitalize">Add to Bag</span></button><a
+              href="https://api.whatsapp.com/send?phone=971588323194&amp;text=https://exceldisc.com/product/microsoft-135-multi-touch-surface-laptop-5-for-business-matte-black-metal-2"
+              target="_blank"
+              class="flex items-center justify-center order-4 px-8 py-3 text-base font-medium border border-transparent rounded-md md:order-3 grow md:grow-0 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-emerald-500"><svg
+                fill="currentColor" viewBox="0 0 308 308" class="h-5 w-5 mr-1.5 h-3 w-3 md:h-5 md:w-5 flex-shrink-0">
+                <g id="XMLID_468_">
+                  <path id="XMLID_469_"
+                    d="M227.904,176.981c-0.6-0.288-23.054-11.345-27.044-12.781c-1.629-0.585-3.374-1.156-5.23-1.156 c-3.032,0-5.579,1.511-7.563,4.479c-2.243,3.334-9.033,11.271-11.131,13.642c-0.274,0.313-0.648,0.687-0.872,0.687 c-0.201,0-3.676-1.431-4.728-1.888c-24.087-10.463-42.37-35.624-44.877-39.867c-0.358-0.61-0.373-0.887-0.376-0.887 c0.088-0.323,0.898-1.135,1.316-1.554c1.223-1.21,2.548-2.805,3.83-4.348c0.607-0.731,1.215-1.463,1.812-2.153 c1.86-2.164,2.688-3.844,3.648-5.79l0.503-1.011c2.344-4.657,0.342-8.587-0.305-9.856c-0.531-1.062-10.012-23.944-11.02-26.348 c-2.424-5.801-5.627-8.502-10.078-8.502c-0.413,0,0,0-1.732,0.073c-2.109,0.089-13.594,1.601-18.672,4.802 c-5.385,3.395-14.495,14.217-14.495,33.249c0,17.129,10.87,33.302,15.537,39.453c0.116,0.155,0.329,0.47,0.638,0.922 c17.873,26.102,40.154,45.446,62.741,54.469c21.745,8.686,32.042,9.69,37.896,9.69c0.001,0,0.001,0,0.001,0 c2.46,0,4.429-0.193,6.166-0.364l1.102-0.105c7.512-0.666,24.02-9.22,27.775-19.655c2.958-8.219,3.738-17.199,1.77-20.458 C233.168,179.508,230.845,178.393,227.904,176.981z">
+                  </path>
+                  <path id="XMLID_470_"
+                    d="M156.734,0C73.318,0,5.454,67.354,5.454,150.143c0,26.777,7.166,52.988,20.741,75.928L0.212,302.716 c-0.484,1.429-0.124,3.009,0.933,4.085C1.908,307.58,2.943,308,4,308c0.405,0,0.813-0.061,1.211-0.188l79.92-25.396 c21.87,11.685,46.588,17.853,71.604,17.853C240.143,300.27,308,232.923,308,150.143C308,67.354,240.143,0,156.734,0z M156.734,268.994c-23.539,0-46.338-6.797-65.936-19.657c-0.659-0.433-1.424-0.655-2.194-0.655c-0.407,0-0.815,0.062-1.212,0.188 l-40.035,12.726l12.924-38.129c0.418-1.234,0.209-2.595-0.561-3.647c-14.924-20.392-22.813-44.485-22.813-69.677 c0-65.543,53.754-118.867,119.826-118.867c66.064,0,119.812,53.324,119.812,118.867 C276.546,215.678,222.799,268.994,156.734,268.994z">
+                  </path>
+                </g>
+              </svg>Order By Whatsapp</a><button type="button"
+              class="flex items-center justify-center order-3 px-3 py-3 text-gray-400 bg-gray-100 rounded-md md:order-4 grow md:grow-0 hover:text-red-600"><svg
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"
+                class="flex-shrink-0 w-6 h-6">
+                <path
+                  d="M9.653 16.915l-.005-.003-.019-.01a20.759 20.759 0 01-1.162-.682 22.045 22.045 0 01-2.582-1.9C4.045 12.733 2 10.352 2 7.5a4.5 4.5 0 018-2.828A4.5 4.5 0 0118 7.5c0 2.852-2.044 5.233-3.885 6.82a22.049 22.049 0 01-3.744 2.582l-.019.01-.005.003h-.002a.739.739 0 01-.69.001l-.002-.001z">
+                </path>
+              </svg><span class="sr-only">Add to favorites</span></button>
+          </div>
+          <div class="flex flex-wrap items-stretch gap-4 mt-6">
+            <div class="flex items-center">
+              <div class="flex-shrink-0">
+                <div class="relative flex items-center justify-center w-12 h-12 rounded-full"><img
+                    alt="alternative text" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
+                    src="/2.jpg" decoding="async" data-nimg="fill"
+                    class="object-contain w-full h-auto" loading="lazy"
+                    style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;"></div>
+              </div>
+              <div class="ml-3">
+                <p class="text-sm font-medium">Ask Our Experts</p>
+                <div class="flex items-center gap-1 text-xs text-gray-500"><a aria-label="Promotion"
+                    class="flex inline-block gap-1 hover:underline whitespace-nowrap" href="/promotion-url"><svg
+                      fill="currentColor" viewBox="0 0 20 20" class="w-4 h-4 text-indigo-600">
+                      <path fill-rule="evenodd"
+                        d="M18 5v8a2 2 0 0 1-2 2h-5l-5 4v-4H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z"
+                        clip-rule="evenodd"></path>
+                    </svg><span class="dark:text-gray-200">Live Chat</span></a> | <a aria-label="Promotion"
+                    class="flex inline-block gap-1 hover:underline whitespace-nowrap"
+                    href="mailt:info@exceldisc.com"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                      fill="currentColor" aria-hidden="true" class="w-4 h-4 text-indigo-600">
+                      <path d="M3 4a2 2 0 00-2 2v1.161l8.441 4.221a1.25 1.25 0 001.118 0L19 7.162V6a2 2 0 00-2-2H3z">
+                      </path>
+                      <path
+                        d="M19 8.839l-7.77 3.885a2.75 2.75 0 01-2.46 0L1 8.839V14a2 2 0 002 2h14a2 2 0 002-2V8.839z">
+                      </path>
+                    </svg><span class="dark:text-gray-200">Email</span></a> | <a aria-label="800.606.6969"
+                    class="flex gap-1 hover:underline whitespace-nowrap" href="tel:8006066969"><svg
+                      xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"
+                      class="w-4 h-4 text-indigo-600">
+                      <path fill-rule="evenodd"
+                        d="M2 3.5A1.5 1.5 0 013.5 2h1.148a1.5 1.5 0 011.465 1.175l.716 3.223a1.5 1.5 0 01-1.052 1.767l-.933.267c-.41.117-.643.555-.48.95a11.542 11.542 0 006.254 6.254c.395.163.833-.07.95-.48l.267-.933a1.5 1.5 0 011.767-1.052l3.223.716A1.5 1.5 0 0118 15.352V16.5a1.5 1.5 0 01-1.5 1.5H15c-1.149 0-2.263-.15-3.326-.43A13.022 13.022 0 012.43 8.326 13.019 13.019 0 012 5V3.5z"
+                        clip-rule="evenodd"></path>
+                    </svg><span class="dark:text-gray-200">800.606.6969</span></a></div>
+              </div>
+            </div>
+            <div class="flex items-center">
+              <div class="flex-shrink-0 w-12 h-12 p-2 bg-gray-100 rounded-full"><svg xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" class="text-indigo-900">
+                  <path
+                    d="M6.5 3c-1.051 0-2.093.04-3.125.117A1.49 1.49 0 002 4.607V10.5h9V4.606c0-.771-.59-1.43-1.375-1.489A41.568 41.568 0 006.5 3zM2 12v2.5A1.5 1.5 0 003.5 16h.041a3 3 0 015.918 0h.791a.75.75 0 00.75-.75V12H2z">
+                  </path>
+                  <path
+                    d="M6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM13.25 5a.75.75 0 00-.75.75v8.514a3.001 3.001 0 014.893 1.44c.37-.275.61-.719.595-1.227a24.905 24.905 0 00-1.784-8.549A1.486 1.486 0 0014.823 5H13.25zM14.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z">
+                  </path>
+                </svg></div>
+              <div class="ml-3">
+                <p class="text-sm">Express Shipping</p>
+                <div class="flex items-center gap-1 text-xs text-gray-500"><span
+                    class="font-semibold text-gray-900 dark:text-white">2-6 Days,</span> <span
+                    class="dark:text-gray-400">via DHL, FedEx, EMS, etc.</span></div>
+              </div>
+            </div><button type="button"
+              class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm grow bg-indigo-50 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              <div class="flex items-center h-5 text-gray-600"><span class="mr-2"><label
+                    class="relative inline-flex items-center block pt-1 text-sm leading-6 text-gray-700 text-gray-900 dark:text-gray-400 undefined">
+                    <div class="relative"><input
+                        class="text-purple-600 border-gray-300 rounded form-checkbox focus:border-purple-400 focus:outline-none focus:ring focus:ring-purple-300 focus:ring-offset-0 dark:focus:ring-gray-300 dark:border-gray-600 dark:focus:border-gray-600 dark:bg-gray-700"
+                        type="checkbox"></div>
+                  </label></span><span>Compare</span></div>
+            </button>
+          </div>
+        </div>
+        <div class="mt-14 sm:mt-16 lg:mt-0 lg:row-end-2 lg:row-span-2 lg:col-span-3 lg:sticky top-20 dark:text-white">
+          <div>
+            <h2 class="text-sm font-medium text-gray-900 uppercase dark:text-white">Key Features</h2>
+            <div class="prose dark:text-white">1. Windows 11 Pro operating system.<br>
+              2. Intel Core i7-1265U processor (12th Gen).<br>
+              3. Up to 4.8 GHz Performance Dual-Core CPU.<br>
+              4. Up to 3.6 GHz Efficiency 8-Core CPU.<br>
+              5. 12 MB L3 Cache.<br>
+              6. Integrated Intel Iris Xe graphics.<br>
+              7. LPDDR5x memory type.<br>
+              8. 32 GB total installed memory.<br>
+              9. 13.5" LCD panel.<br>
+              10. 3:2 aspect ratio.<br>
+              11. 2256 x 1504 resolution.<br>
+              12. Touchscreen capability.<br></div>
+          </div>
+          <form class="mt-6"></form>
+        </div>
+      </div>
+      <div id="tabs" class="h-16"></div>
+      <div class="px-2 lg:px-8">
+        <div class="w-full mb-16 lg:mt-0 lg:col-span-4">
+          <div>
+            <div class="z-20 bg-white border-b border-gray-200 dark:bg-black">
+              <div class="flex -mb-px space-x-8 overflow-x-auto" role="tablist" aria-orientation="horizontal">
+                <h2
+                  class="py-2 text-xs font-medium text-indigo-600 border-b-2 border-indigo-600 outline-none cursor-pointer dark:border-indigo-600 whitespace-nowrap md:py-6 md:text-sm focus:border-transparent"
+                  id="headlessui-tabs-tab-:r2f:" role="tab" aria-selected="true" tabindex="0"
+                  data-headlessui-state="selected" aria-controls="headlessui-tabs-panel-:r3i:">Overview</h2>
+                <h2
+                  class="py-2 text-xs font-medium text-gray-700 border-b-2 border-transparent outline-none cursor-pointer dark:text-gray-400 hover:text-gray-800 hover:border-gray-300 whitespace-nowrap md:py-6 md:text-sm"
+                  id="headlessui-tabs-tab-:r2g:" role="tab" aria-selected="false" tabindex="-1" data-headlessui-state=""
+                  aria-controls="headlessui-tabs-panel-:r3j:">Specifications</h2><button
+                  class="py-2 text-xs font-medium text-gray-700 border-b-2 border-transparent outline-none cursor-pointer dark:text-gray-400 hover:text-gray-800 hover:border-gray-300 whitespace-nowrap md:py-6 md:text-sm"
+                  id="headlessui-tabs-tab-:r2h:" role="tab" type="button" aria-selected="false" tabindex="-1"
+                  data-headlessui-state="" aria-controls="headlessui-tabs-panel-:r3k:">Reviews</button>
+                <h4
+                  class="py-2 text-xs font-medium text-gray-700 border-b-2 border-transparent outline-none cursor-pointer dark:text-gray-400 hover:text-gray-800 hover:border-gray-300 whitespace-nowrap md:py-6 md:text-sm"
+                  id="headlessui-tabs-tab-:r2i:" role="tab" aria-selected="false" tabindex="-1" data-headlessui-state=""
+                  aria-controls="headlessui-tabs-panel-:r3l:">Q&amp;A</h4>
+                <h3
+                  class="py-2 text-xs font-medium text-gray-700 border-b-2 border-transparent outline-none cursor-pointer dark:text-gray-400 hover:text-gray-800 hover:border-gray-300 whitespace-nowrap md:py-6 md:text-sm"
+                  id="headlessui-tabs-tab-:r2j:" role="tab" aria-selected="false" tabindex="-1" data-headlessui-state=""
+                  aria-controls="headlessui-tabs-panel-:r3m:">Warranty</h3>
+                <h4
+                  class="py-2 text-xs font-medium text-gray-700 border-b-2 border-transparent outline-none cursor-pointer dark:text-gray-400 hover:text-gray-800 hover:border-gray-300 whitespace-nowrap md:py-6 md:text-sm"
+                  id="headlessui-tabs-tab-:r2k:" role="tab" aria-selected="false" tabindex="-1" data-headlessui-state=""
+                  aria-controls="headlessui-tabs-panel-:r3n:">Frequently Compared</h4>
+                <h2
+                  class="py-2 text-xs font-medium text-gray-700 capitalize border-b-2 border-transparent outline-none cursor-pointer dark:text-gray-400 hover:text-gray-800 hover:border-gray-300 whitespace-nowrap md:py-6 md:text-sm"
+                  id="headlessui-tabs-tab-:r2l:" role="tab" aria-selected="false" tabindex="-1" data-headlessui-state=""
+                  aria-controls="headlessui-tabs-panel-:r3o:">wholesale buying guide</h2>
+              </div>
+            </div>
+            <div class="pt-10" id="headlessui-tabs-panel-:r3i:" role="tabpanel"
+              aria-labelledby="headlessui-tabs-tab-:r2f:" tabindex="0" data-headlessui-state="selected">
+              <div class="w-full overflow-auto prose dark:prose-invert">The Microsoft 13.5" Multi-Touch Surface Laptop 5
+                for Business is a high-performance laptop designed specifically for professional use. Featuring a sleek
+                matte black metal exterior, it offers a sophisticated and professional look.<br>
+                <br>
+                Running on the latest Windows 11 Pro operating system, this laptop is equipped with an Intel Core
+                i7-1265U (12th Gen) processor. With a dual-core configuration and a maximum clock speed of 4.8 GHz, it
+                delivers powerful and efficient performance. The 8-core efficiency CPU offers a clock speed of up to 3.6
+                GHz, ensuring smooth multitasking and improved overall efficiency.<br>
+                <br>
+                The laptop comes with 32 GB of LPDDR5x memory, providing ample space for running multiple applications
+                simultaneously. The 12 MB L3 cache further enhances the laptop's speed and responsiveness. <br>
+                <br>
+                Featuring integrated Intel Iris Xe graphics, the laptop delivers stunning visuals and smooth graphics
+                performance. The 13.5" LCD panel offers a 3:2 aspect ratio and a resolution of 2256 x 1504 pixels,
+                providing sharp and vibrant visuals. The touchscreen feature adds convenience and versatility to the
+                user experience.<br>
+                <br>
+                With a total installed storage capacity of 512 GB in the form of a 512 GB M.2 NVMe PCIe solid-state
+                drive, the laptop provides ample space for storing files, documents, and applications. The absence of an
+                optical drive makes the laptop even slimmer and more lightweight.<br>
+                <br>
+                In terms of connectivity, the laptop offers a USB-A 3.0/3.1/3.2 Gen 1 port and a Thunderbolt 4 USB-C
+                port that supports DisplayPort and power delivery. It also includes a 3.5 mm headphone output, two
+                far-field microphones, and built-in speakers. Wi-Fi 6 (802.11ax) with MU-MIMO support and Bluetooth 5.2
+                ensure fast and reliable wireless connectivity.<br>
+                <br>
+                The laptop features a user-facing 720p webcam for video conferencing and virtual meetings. With an
+                estimated battery life of up to 18 hours, it provides long-lasting productivity on the go.<br>
+                <br>
+                Additional features include a notebook keyboard with backlight for easy typing in low-light
+                environments, a touchpad for smooth navigation, and dedicated hardware TPM security chip and facial
+                recognition for enhanced security.<br>
+                <br>
+                With dimensions of 12.1 x 8.8 x 0.6" and a weight of 2.86 lb, this laptop is lightweight and portable,
+                making it ideal for business professionals who are always on the go. The package weight is 4.74 lb, and
+                the box dimensions are 15.6 x 11.7 x 2.1".<br>
+                <br>
+                Overall, the Microsoft 13.5" Multi-Touch Surface Laptop 5 for Business offers exceptional performance, a
+                sleek design, and a range of features that make it a suitable choice for professionals in need of a
+                reliable and efficient laptop.
+              </div>
+            </div><span id="headlessui-tabs-panel-:r3j:" role="tabpanel" tabindex="-1"
+              aria-labelledby="headlessui-tabs-tab-:r2g:"
+              style="position: fixed; top: 1px; left: 1px; width: 1px; height: 0px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; border-width: 0px;"></span><span
+              id="headlessui-tabs-panel-:r3k:" role="tabpanel" tabindex="-1" aria-labelledby="headlessui-tabs-tab-:r2h:"
+              style="position: fixed; top: 1px; left: 1px; width: 1px; height: 0px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; border-width: 0px;"></span><span
+              id="headlessui-tabs-panel-:r3l:" role="tabpanel" tabindex="-1" aria-labelledby="headlessui-tabs-tab-:r2i:"
+              style="position: fixed; top: 1px; left: 1px; width: 1px; height: 0px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; border-width: 0px;"></span><span
+              id="headlessui-tabs-panel-:r3m:" role="tabpanel" tabindex="-1" aria-labelledby="headlessui-tabs-tab-:r2j:"
+              style="position: fixed; top: 1px; left: 1px; width: 1px; height: 0px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; border-width: 0px;"></span><span
+              id="headlessui-tabs-panel-:r3n:" role="tabpanel" tabindex="-1" aria-labelledby="headlessui-tabs-tab-:r2k:"
+              style="position: fixed; top: 1px; left: 1px; width: 1px; height: 0px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; border-width: 0px;"></span><span
+              id="headlessui-tabs-panel-:r3o:" role="tabpanel" tabindex="-1" aria-labelledby="headlessui-tabs-tab-:r2l:"
+              style="position: fixed; top: 1px; left: 1px; width: 1px; height: 0px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; border-width: 0px;"></span>
+          </div>
+        </div>
+      </div>
+      <div class="px-2 py-8 mx-auto tags containerClasses lg:px-8">
+        <div class="flex flex-col gap-5 p-3 border border-gray-300 rounded-lg olClasses"><span
+            class="text-base italic font-extrabold uppercase md:text-xl">search for similar products by clicking these
+            tags</span>
+          <div class="flex flex-wrap items-center gap-2 text-xs md:text-sm lg:text-base"></div>
+        </div>
+      </div>
+      <div
+        class="sticky left-0 right-0 z-20 block w-full overflow-hidden bottom-20 md:bottom-24 isolate backdrop-blur-sm bg-green/80 dark:bg-black/80 sm:before:flex-1">
+        <div
+          class="px-2 border-b border-gray-200 isolate backdrop-blur-sm bg-white/80 dark:bg-black dark:bg-bg-dark lg:px-8">
+          <div class="flex -mb-px space-x-8 overflow-x-auto" role="tablist" aria-orientation="horizontal">
+            <h2
+              class="py-2 text-xs font-medium text-indigo-600 border-b-2 border-indigo-600 outline-none cursor-pointer dark:border-indigo-600 whitespace-nowrap md:py-6 md:text-sm focus:border-transparent"
+              id="headlessui-tabs-tab-:r2t:" role="tab" aria-selected="true" tabindex="0"
+              data-headlessui-state="selected">Overview</h2>
+            <h2
+              class="py-2 text-xs font-medium text-gray-700 border-b-2 border-transparent outline-none cursor-pointer dark:text-gray-400 hover:text-gray-800 hover:border-gray-300 whitespace-nowrap md:py-6 md:text-sm focus:border-transparent"
+              id="headlessui-tabs-tab-:r2u:" role="tab" aria-selected="false" tabindex="-1" data-headlessui-state="">
+              Specifications</h2>
+            <h2
+              class="py-2 text-xs font-medium text-gray-700 border-b-2 border-transparent outline-none cursor-pointer dark:text-gray-400 hover:text-gray-800 hover:border-gray-300 whitespace-nowrap md:py-6 md:text-sm focus:border-transparent"
+              id="headlessui-tabs-tab-:r2v:" role="tab" aria-selected="false" tabindex="-1" data-headlessui-state="">
+              Reviews</h2>
+            <h2
+              class="py-2 text-xs font-medium text-gray-700 border-b-2 border-transparent outline-none cursor-pointer dark:text-gray-400 hover:text-gray-800 hover:border-gray-300 whitespace-nowrap md:py-6 md:text-sm focus:border-transparent"
+              id="headlessui-tabs-tab-:r30:" role="tab" aria-selected="false" tabindex="-1" data-headlessui-state="">
+              Q&amp;A</h2>
+            <h2
+              class="py-2 text-xs font-medium text-gray-700 border-b-2 border-transparent outline-none cursor-pointer dark:text-gray-400 hover:text-gray-800 hover:border-gray-300 whitespace-nowrap md:py-6 md:text-sm focus:border-transparent"
+              id="headlessui-tabs-tab-:r31:" role="tab" aria-selected="false" tabindex="-1" data-headlessui-state="">
+              Warranty</h2>
+            <h2
+              class="py-2 text-xs font-medium text-gray-700 border-b-2 border-transparent outline-none cursor-pointer dark:text-gray-400 hover:text-gray-800 hover:border-gray-300 whitespace-nowrap md:py-6 md:text-sm focus:border-transparent"
+              id="headlessui-tabs-tab-:r32:" role="tab" aria-selected="false" tabindex="-1" data-headlessui-state="">
+              Frequently Compared</h2>
+            <h2
+              class="py-2 text-xs font-medium text-gray-700 border-b-2 border-transparent outline-none cursor-pointer dark:text-gray-400 hover:text-gray-800 hover:border-gray-300 whitespace-nowrap md:py-6 md:text-sm focus:border-transparent"
+              id="headlessui-tabs-tab-:r33:" role="tab" aria-selected="false" tabindex="-1" data-headlessui-state="">
+              Wholesale Buying Guide</h2>
+          </div>
+        </div>
+      </div>
+      <div
+        class="sticky bottom-0 left-0 right-0 z-20 h-20 p-5 overflow-hidden duration-300 ease-in transition-height md:h-24 isolate backdrop-blur-sm bg-white/80 dark:bg-black lg:px-8 sm:before:flex-1">
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex items-start">
+            <div class="flex-shrink-0"><img class="h-10 md:h-16"
+                src="/2.jpg"
+                alt="Microsoft 13.5&quot; Multi-Touch Surface Laptop 5 for Business (Matte Black, Metal)"></div>
+            <div class="ml-3">
+              <p class="text-sm font-medium md:text-md lg:text-xl line-clamp-2">Microsoft 13.5" Multi-Touch Surface
+                Laptop 5 for Business (Matte Black, Metal)</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 flex-nowrap"><span
+              class="inline-block text-xl font-bold text-gray-900 lg:text-3xl dark:text-gray-100 whitespace-nowrap">$2,182.23</span><a
+              aria-label="order by whatsapp"
+              href="https://api.whatsapp.com/send?phone=971588323194&amp;text=https://exceldisc.com//product/microsoft-135-multi-touch-surface-laptop-5-for-business-matte-black-metal-2"
+              class="flex items-center justify-center p-2 text-base font-medium border border-transparent rounded-md lg:px-5 lg:py-3 md:order-3 grow md:grow-0 bg-emerald-100 text-emerald-700 hover:bg-emerald-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-emerald-500 whitespace-nowrap"><svg
+                fill="currentColor" viewBox="0 0 308 308" class="h-5 w-5 flex-shrink-0 w-5 h-5 mr-1.5">
+                <g id="XMLID_468_">
+                  <path id="XMLID_469_"
+                    d="M227.904,176.981c-0.6-0.288-23.054-11.345-27.044-12.781c-1.629-0.585-3.374-1.156-5.23-1.156 c-3.032,0-5.579,1.511-7.563,4.479c-2.243,3.334-9.033,11.271-11.131,13.642c-0.274,0.313-0.648,0.687-0.872,0.687 c-0.201,0-3.676-1.431-4.728-1.888c-24.087-10.463-42.37-35.624-44.877-39.867c-0.358-0.61-0.373-0.887-0.376-0.887 c0.088-0.323,0.898-1.135,1.316-1.554c1.223-1.21,2.548-2.805,3.83-4.348c0.607-0.731,1.215-1.463,1.812-2.153 c1.86-2.164,2.688-3.844,3.648-5.79l0.503-1.011c2.344-4.657,0.342-8.587-0.305-9.856c-0.531-1.062-10.012-23.944-11.02-26.348 c-2.424-5.801-5.627-8.502-10.078-8.502c-0.413,0,0,0-1.732,0.073c-2.109,0.089-13.594,1.601-18.672,4.802 c-5.385,3.395-14.495,14.217-14.495,33.249c0,17.129,10.87,33.302,15.537,39.453c0.116,0.155,0.329,0.47,0.638,0.922 c17.873,26.102,40.154,45.446,62.741,54.469c21.745,8.686,32.042,9.69,37.896,9.69c0.001,0,0.001,0,0.001,0 c2.46,0,4.429-0.193,6.166-0.364l1.102-0.105c7.512-0.666,24.02-9.22,27.775-19.655c2.958-8.219,3.738-17.199,1.77-20.458 C233.168,179.508,230.845,178.393,227.904,176.981z">
+                  </path>
+                  <path id="XMLID_470_"
+                    d="M156.734,0C73.318,0,5.454,67.354,5.454,150.143c0,26.777,7.166,52.988,20.741,75.928L0.212,302.716 c-0.484,1.429-0.124,3.009,0.933,4.085C1.908,307.58,2.943,308,4,308c0.405,0,0.813-0.061,1.211-0.188l79.92-25.396 c21.87,11.685,46.588,17.853,71.604,17.853C240.143,300.27,308,232.923,308,150.143C308,67.354,240.143,0,156.734,0z M156.734,268.994c-23.539,0-46.338-6.797-65.936-19.657c-0.659-0.433-1.424-0.655-2.194-0.655c-0.407,0-0.815,0.062-1.212,0.188 l-40.035,12.726l12.924-38.129c0.418-1.234,0.209-2.595-0.561-3.647c-14.924-20.392-22.813-44.485-22.813-69.677 c0-65.543,53.754-118.867,119.826-118.867c66.064,0,119.812,53.324,119.812,118.867 C276.546,215.678,222.799,268.994,156.734,268.994z">
+                  </path>
+                </g>
+              </svg><span class="max-lg:hidden">Order by Whatsapp</span></a><button type="button"
+              aria-label="review bag"
+              class="flex items-center justify-center p-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md lg:text-base lg:py-3 lg:px-5 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"><svg
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"
+                class="lg:mr-1.5 h-4 w-4 lg:h-5 lg:w-5 flex-shrink-0">
+                <path fill-rule="evenodd"
+                  d="M6 5v1H4.667a1.75 1.75 0 00-1.743 1.598l-.826 9.5A1.75 1.75 0 003.84 19H16.16a1.75 1.75 0 001.743-1.902l-.826-9.5A1.75 1.75 0 0015.333 6H14V5a4 4 0 00-8 0zm4-2.5A2.5 2.5 0 007.5 5v1h5V5A2.5 2.5 0 0010 2.5zM7.5 10a2.5 2.5 0 005 0V8.75a.75.75 0 011.5 0V10a4 4 0 01-8 0V8.75a.75.75 0 011.5 0V10z"
+                  clip-rule="evenodd"></path>
+              </svg><span class="max-md:hidden whitespace-nowrap">Review Bag</span></button></div>
+        </div>
+      </div>
+      <div style="position: fixed; z-index: 9999; inset: 16px; pointer-events: none;"></div>
+    </main>
+</body>
+<script src="java.js"></script>
+
+</html>
